@@ -29,8 +29,8 @@ export default defineConfig({
     }),
   ],
   i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
+    locales: ["zh-CN"],
+    defaultLocale: "zh-CN",
     routing: {
       prefixDefaultLocale: false,
     },
@@ -62,11 +62,108 @@ export default defineConfig({
     {
       name: "Google Sans Code",
       cssVariable: "--font-google-sans-code",
-      provider: fontProviders.google(),
-      fallbacks: ["monospace"],
-      weights: [300, 400, 500, 600, 700],
-      styles: ["normal", "italic"],
-      formats: ["woff", "ttf"],
+      provider: fontProviders.local(),
+      fallbacks: ["LXGW WenKai", "monospace"],
+      optimizedFallbacks: false,
+      options: {
+        variants: [
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-300-Normal.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-300-Normal.ttf",
+            ],
+            weight: "300",
+            style: "normal",
+          },
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-300-Italic.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-300-Italic.ttf",
+            ],
+            weight: "300",
+            style: "italic",
+          },
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-400-Normal.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-400-Normal.ttf",
+            ],
+            weight: "400",
+            style: "normal",
+          },
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-400-Italic.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-400-Italic.ttf",
+            ],
+            weight: "400",
+            style: "italic",
+          },
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-500-Normal.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-500-Normal.ttf",
+            ],
+            weight: "500",
+            style: "normal",
+          },
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-500-Italic.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-500-Italic.ttf",
+            ],
+            weight: "500",
+            style: "italic",
+          },
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-600-Normal.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-600-Normal.ttf",
+            ],
+            weight: "600",
+            style: "normal",
+          },
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-600-Italic.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-600-Italic.ttf",
+            ],
+            weight: "600",
+            style: "italic",
+          },
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-700-Normal.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-700-Normal.ttf",
+            ],
+            weight: "700",
+            style: "normal",
+          },
+          {
+            src: [
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-700-Italic.woff",
+              "./src/assets/fonts/google-sans-code/GoogleSansCode-700-Italic.ttf",
+            ],
+            weight: "700",
+            style: "italic",
+          },
+        ],
+      },
+    },
+    {
+      name: "LXGW WenKai",
+      cssVariable: "--font-lxgw-wenkai",
+      provider: fontProviders.local(),
+      fallbacks: ["sans-serif"],
+      options: {
+        variants: [
+          {
+            src: ["./src/assets/fonts/lxgw-wenkai/LXGWWenKai-Regular.ttf"],
+            weight: "400",
+            style: "normal",
+          },
+        ],
+      },
     },
   ],
   env: {

@@ -20,6 +20,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.7.3
         version: 3.7.3
+      '@hanzi.pro/webfonts-lxgw-wenkai':
+        specifier: 0.1.0
+        version: 0.1.0
       '@tailwindcss/vite':
         specifier: ^4.3.2
         version: 4.3.2(vite@8.1.0(@types/node@24.12.2)(esbuild@0.28.1)(jiti@2.7.0)(yaml@2.8.3))
@@ -516,6 +519,9 @@ packages:
   '@eslint/plugin-kit@0.7.2':
     resolution: {integrity: sha512-+CNAzxglkrpNf/kKywqQfk74QjtceuOE7Qm+AF8miRvPF/wmmK5+OJOgVh3AVTT3RP2mH3+FOaxlE5v72owk0A==}
     engines: {node: ^20.19.0 || ^22.13.0 || >=24}
+
+  '@hanzi.pro/webfonts-lxgw-wenkai@0.1.0':
+    resolution: {integrity: sha512-NvIYwAfA37shkzIirQ3D5QSiI+vqC/kYBIj759GuxWZxxr63lb6of592PnFQjHOKCO0gknrnT5/zA2KV1riTeA==}
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -3648,6 +3654,8 @@ snapshots:
     dependencies:
       '@eslint/core': 1.2.1
       levn: 0.4.1
+
+  '@hanzi.pro/webfonts-lxgw-wenkai@0.1.0': {}
 
   '@humanfs/core@0.19.2':
     dependencies:
