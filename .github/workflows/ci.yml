@@ -4,12 +4,10 @@ permissions:
   contents: read
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
-    types:
-      - opened
-      - edited
-      - synchronize
-      - reopened
   workflow_call:
 
 jobs:
