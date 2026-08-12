@@ -67,7 +67,7 @@ jobs:
       - name: "🔐 Configure deployment SSH"
         env:
           VPS_SSH_KEY: ${{ secrets.BLOG_VPS_SSH_KEY }}
-          VPS_KNOWN_HOSTS: ${{ secrets.BLOG_VPS_KNOWN_HOSTS }}
+          VPS_KNOWN_HOSTS: ${{ secrets.BLOG_VPS_KNOW_HOSTS }}
         run: |
           install -m 700 -d ~/.ssh
           printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519

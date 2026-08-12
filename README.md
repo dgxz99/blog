@@ -107,16 +107,16 @@ chore: 调整构建配置
 
 自动部署使用名为`blog`的GitHub Environment，并限制为只有`main`分支可以部署。需要在该Environment中配置以下Secrets：
 
-| Secret                 | 说明                           |
-| ---------------------- | ------------------------------ |
-| `BLOG_VPS_HOST`        | VPS的IP地址或可解析主机名      |
-| `BLOG_VPS_PORT`        | VPS的SSH端口                   |
-| `BLOG_VPS_USER`        | 执行部署的SSH用户              |
-| `BLOG_VPS_PATH`        | Nginx站点目录                  |
-| `BLOG_VPS_SSH_KEY`     | 专用部署私钥的完整内容         |
-| `BLOG_VPS_KNOWN_HOSTS` | VPS对应SSH端口上的主机公钥记录 |
+| Secret                | 说明                           |
+| --------------------- | ------------------------------ |
+| `BLOG_VPS_HOST`       | VPS的IP地址或可解析主机名      |
+| `BLOG_VPS_PORT`       | VPS的SSH端口                   |
+| `BLOG_VPS_USER`       | 执行部署的SSH用户              |
+| `BLOG_VPS_PATH`       | Nginx站点目录                  |
+| `BLOG_VPS_SSH_KEY`    | 专用部署私钥的完整内容         |
+| `BLOG_VPS_KNOW_HOSTS` | VPS对应SSH端口上的主机公钥记录 |
 
-在可信环境中确认VPS主机指纹后，可以生成`BLOG_VPS_KNOWN_HOSTS`的内容：
+在可信环境中确认VPS主机指纹后，可以生成`BLOG_VPS_KNOW_HOSTS`的内容：
 
 ```bash
 ssh-keyscan -p 10022 VPS地址
