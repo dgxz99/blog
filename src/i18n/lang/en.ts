@@ -21,6 +21,7 @@ export default {
     editPage: "Edit page",
     previousPost: "Previous Post",
     nextPost: "Next Post",
+    tableOfContents: "Contents",
   },
   pagination: {
     prev: "Prev",

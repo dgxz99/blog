@@ -21,6 +21,7 @@ export default {
     editPage: "编辑文章",
     previousPost: "上一篇",
     nextPost: "下一篇",
+    tableOfContents: "目录",
   },
   pagination: {
     prev: "上一页",

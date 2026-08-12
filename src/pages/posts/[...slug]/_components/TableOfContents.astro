@@ -1,0 +1,139 @@
+---
+type Heading = {
+  depth: number;
+  slug: string;
+  text: string;
+};
+
+type Props = {
+  headings: Heading[];
+  title: string;
+};
+
+const { headings, title } = Astro.props;
+const tocHeadings = headings.filter(heading => [2, 3].includes(heading.depth));
+
+const linkClass =
+  "toc-link text-muted-foreground hover:text-accent block border-s-2 border-transparent py-1 text-sm leading-snug transition-colors";
+---
+
+{
+  tocHeadings.length >= 2 && (
+    <div data-toc-root>
+      <details class="border-border bg-muted/20 my-6 rounded-sm border px-4 py-3 xl:hidden">
+        <summary class="text-foreground marker:text-accent cursor-pointer font-semibold select-none">
+          {title}
+        </summary>
+        <nav aria-label={title} class="mt-3 border-s border-dashed ps-2">
+          <ol>
+            {tocHeadings.map(heading => (
+              <li>
+                <a
+                  href={`#${heading.slug}`}
+                  class:list={[
+                    linkClass,
+                    heading.depth === 2 ? "ps-3" : "ps-7",
+                  ]}
+                  data-toc-link={heading.slug}
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </details>
+
+      <aside class="hidden xl:block">
+        <h2 class="text-foreground mb-3 text-sm font-bold tracking-widest">
+          {title}
+        </h2>
+        <nav aria-label={title} class="border-s border-dashed">
+          <ol>
+            {tocHeadings.map(heading => (
+              <li>
+                <a
+                  href={`#${heading.slug}`}
+                  class:list={[
+                    linkClass,
+                    heading.depth === 2 ? "ps-3" : "ps-7",
+                  ]}
+                  data-toc-link={heading.slug}
+                >
+                  {heading.text}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </aside>
+    </div>
+  )
+}
+
+<script>
+  let removeListeners: (() => void) | undefined;
+
+  function initTableOfContents() {
+    removeListeners?.();
+
+    const links = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]")
+    );
+    if (!links.length) return;
+
+    const headingIds = [...new Set(links.map(link => link.dataset.tocLink))];
+    const headings = headingIds
+      .map(id => document.getElementById(id ?? ""))
+      .filter((heading): heading is HTMLElement => Boolean(heading));
+
+    let frameId = 0;
+
+    function updateActiveHeading() {
+      const activeHeading = headings.reduce<HTMLElement | undefined>(
+        (active, heading) =>
+          heading.getBoundingClientRect().top <= 144 ? heading : active,
+        headings[0]
+      );
+
+      for (const link of links) {
+        const isActive = link.dataset.tocLink === activeHeading?.id;
+        link.classList.toggle("toc-link-active", isActive);
+        if (isActive) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      }
+      frameId = 0;
+    }
+
+    function scheduleUpdate() {
+      if (!frameId) frameId = requestAnimationFrame(updateActiveHeading);
+    }
+
+    function closeMobileToc(event: Event) {
+      const link = event.currentTarget as HTMLAnchorElement;
+      link.closest("details")?.removeAttribute("open");
+    }
+
+    window.addEventListener("scroll", scheduleUpdate, { passive: true });
+    for (const link of links) link.addEventListener("click", closeMobileToc);
+    updateActiveHeading();
+
+    removeListeners = () => {
+      window.removeEventListener("scroll", scheduleUpdate);
+      for (const link of links)
+        link.removeEventListener("click", closeMobileToc);
+      if (frameId) cancelAnimationFrame(frameId);
+    };
+  }
+
+  document.addEventListener("astro:page-load", initTableOfContents);
+  initTableOfContents();
+</script>
+
+<style>
+  .toc-link-active {
+    border-inline-start-color: var(--color-accent);
+    color: var(--color-accent);
+    font-weight: 600;
+  }
+</style>
