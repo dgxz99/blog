@@ -9,6 +9,9 @@ const posts = defineCollection({
   loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: `./${BLOG_PATH}` }),
   schema: ({ image }) =>
     z.object({
+      id: z
+        .string()
+        .regex(/^[0-9A-HJKMNP-TV-Z]{12}$/, "id 必须是有效的 12 位短 ID"),
       author: z.string().default(config.site.author),
       pubDatetime: z.date(),
       modDatetime: z.date().optional().nullable(),

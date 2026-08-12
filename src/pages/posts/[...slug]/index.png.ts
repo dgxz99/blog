@@ -6,6 +6,7 @@ import sharp from "sharp";
 import { getFontPathByWeight } from "@/utils/getFontPathByWeight";
 import { getPostSlug } from "@/utils/getPostPaths";
 import config from "@/config";
+import { validatePostIds } from "@/utils/validatePostIds";
 
 export async function getStaticPaths() {
   if (!config.features.dynamicOgImage) {
@@ -15,9 +16,10 @@ export async function getStaticPaths() {
   const posts = await getCollection("posts").then(p =>
     p.filter(({ data }) => !data.draft && !data.ogImage)
   );
+  validatePostIds(posts);
 
   return posts.map(post => ({
-    params: { slug: getPostSlug(post.id, post.filePath) },
+    params: { slug: getPostSlug(post.data.id, post.filePath) },
     props: post,
   }));
 }

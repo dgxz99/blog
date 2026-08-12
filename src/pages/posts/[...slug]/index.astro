@@ -18,9 +18,11 @@ import AdjacentPostNav from "./_components/AdjacentPostNav.astro";
 import TableOfContents from "./_components/TableOfContents.astro";
 import config from "@/config";
 import { useTranslations } from "@/i18n";
+import { validatePostIds } from "@/utils/validatePostIds";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
+  validatePostIds(posts);
   const sortedPosts = getSortedPosts(posts);
 
   return sortedPosts.map((post, index) => {
@@ -30,7 +32,7 @@ export async function getStaticPaths() {
     const seriesIndex = seriesPosts.findIndex(item => item.id === post.id);
 
     return {
-      params: { slug: getPostSlug(post.id, post.filePath) },
+      params: { slug: getPostSlug(post.data.id, post.filePath) },
       props: {
         post,
         // sortedPosts is newest-first, so "older" (prev) is a higher index
@@ -38,7 +40,7 @@ export async function getStaticPaths() {
         prevPost:
           index < sortedPosts.length - 1
             ? {
-                id: sortedPosts[index + 1].id,
+                id: sortedPosts[index + 1].data.id,
                 title: sortedPosts[index + 1].data.title,
                 filePath: sortedPosts[index + 1].filePath,
               }
@@ -46,7 +48,7 @@ export async function getStaticPaths() {
         nextPost:
           index > 0
             ? {
-                id: sortedPosts[index - 1].id,
+                id: sortedPosts[index - 1].data.id,
                 title: sortedPosts[index - 1].data.title,
                 filePath: sortedPosts[index - 1].filePath,
               }
@@ -54,7 +56,7 @@ export async function getStaticPaths() {
         seriesPrevPost:
           seriesIndex >= 0 && seriesIndex < seriesPosts.length - 1
             ? {
-                id: seriesPosts[seriesIndex + 1].id,
+                id: seriesPosts[seriesIndex + 1].data.id,
                 title: seriesPosts[seriesIndex + 1].data.title,
                 filePath: seriesPosts[seriesIndex + 1].filePath,
               }
@@ -62,7 +64,7 @@ export async function getStaticPaths() {
         seriesNextPost:
           seriesIndex > 0
             ? {
-                id: seriesPosts[seriesIndex - 1].id,
+                id: seriesPosts[seriesIndex - 1].data.id,
                 title: seriesPosts[seriesIndex - 1].data.title,
                 filePath: seriesPosts[seriesIndex - 1].filePath,
               }
@@ -115,7 +117,7 @@ if (typeof initOgImage === "string") {
 }
 
 if (!ogImageUrl && config.features.dynamicOgImage) {
-  const postUrl = getPostUrl(post.id, post.filePath, locale).replace(
+  const postUrl = getPostUrl(post.data.id, post.filePath, locale).replace(
     /\/+$/,
     ""
   );

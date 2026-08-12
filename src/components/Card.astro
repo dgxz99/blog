@@ -20,7 +20,7 @@ const {
 } = Astro.props;
 
 const { title, description, ...props } = data;
-const postUrl = getPostUrl(id, filePath, Astro.currentLocale);
+const postUrl = getPostUrl(data.id, filePath, Astro.currentLocale);
 const href =
   seriesContext && data.series
     ? `${postUrl}?series=${encodeURIComponent(slugifyStr(data.series))}`

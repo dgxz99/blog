@@ -8,6 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "new:post": "node scripts/new-post.mjs",
     "build": "astro check && astro build && pagefind --site dist && cp -r dist/pagefind public/",
     "preview": "astro preview",
     "sync": "astro sync",
