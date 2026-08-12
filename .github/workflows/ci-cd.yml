@@ -1,0 +1,86 @@
+name: CI/CD
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_call:
+
+jobs:
+  build:
+    name: Code standards & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "📦 Install pnpm"
+        uses: pnpm/action-setup@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "pnpm"
+
+      - name: "📦 Install dependencies"
+        run: pnpm install --frozen-lockfile
+
+      - name: "🔎 Lint code"
+        run: pnpm run lint
+
+      - name: "📝 Checking code format"
+        run: pnpm run format:check
+
+      - name: "🚀 Build the project"
+        run: pnpm run build
+
+      - name: "📦 Upload build artifact"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: blog-dist
+          path: dist/
+          if-no-files-found: error
+
+  deploy:
+    name: Deploy to VPS
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    environment: blog
+
+    steps:
+      - name: "📦 Download build artifact"
+        uses: actions/download-artifact@v4
+        with:
+          name: blog-dist
+          path: dist/
+
+      - name: "🔐 Configure deployment SSH"
+        env:
+          VPS_SSH_KEY: ${{ secrets.BLOG_VPS_SSH_KEY }}
+          VPS_KNOWN_HOSTS: ${{ secrets.BLOG_VPS_KNOWN_HOSTS }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$VPS_SSH_KEY" > ~/.ssh/id_ed25519
+          printf '%s\n' "$VPS_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          chmod 600 ~/.ssh/id_ed25519 ~/.ssh/known_hosts
+
+      - name: "📤 Deploy to VPS"
+        env:
+          VPS_HOST: ${{ secrets.BLOG_VPS_HOST }}
+          VPS_PORT: ${{ secrets.BLOG_VPS_PORT }}
+          VPS_USER: ${{ secrets.BLOG_VPS_USER }}
+          VPS_PATH: ${{ secrets.BLOG_VPS_PATH }}
+        run: |
+          rsync -az --delete \
+            -e "ssh -p $VPS_PORT -o StrictHostKeyChecking=yes" \
+            dist/ "$VPS_USER@$VPS_HOST:$VPS_PATH/"

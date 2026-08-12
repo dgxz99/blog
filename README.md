@@ -103,6 +103,27 @@ chore: 调整构建配置
 
 推送到 `main` 分支或提交 Pull Request 时，GitHub Actions 会自动执行代码检查、格式检查和生产构建。
 
+`main`分支构建成功后，独立部署任务会通过SSH将`dist/`同步到VPS的Nginx站点目录。VPS不需要拉取代码、安装Node.js或重启Nginx。
+
+自动部署使用名为`blog`的GitHub Environment，并限制为只有`main`分支可以部署。需要在该Environment中配置以下Secrets：
+
+| Secret                 | 说明                           |
+| ---------------------- | ------------------------------ |
+| `BLOG_VPS_HOST`        | VPS的IP地址或可解析主机名      |
+| `BLOG_VPS_PORT`        | VPS的SSH端口                   |
+| `BLOG_VPS_USER`        | 执行部署的SSH用户              |
+| `BLOG_VPS_PATH`        | Nginx站点目录                  |
+| `BLOG_VPS_SSH_KEY`     | 专用部署私钥的完整内容         |
+| `BLOG_VPS_KNOWN_HOSTS` | VPS对应SSH端口上的主机公钥记录 |
+
+在可信环境中确认VPS主机指纹后，可以生成`BLOG_VPS_KNOWN_HOSTS`的内容：
+
+```bash
+ssh-keyscan -p 10022 VPS地址
+```
+
+部署使用`rsync -az --delete`，VPS目标目录会与本次构建的`dist/`保持一致。`BLOG_VPS_PATH`必须是博客独占目录，其中不属于构建产物的文件也会被删除；部署用户需要拥有该目录的写入和删除权限。
+
 ## 致谢与许可
 
 本项目基于 MIT 许可的 [AstroPaper](https://github.com/satnaing/astro-paper) 修改，原项目版权信息见 [LICENSE](LICENSE)。
