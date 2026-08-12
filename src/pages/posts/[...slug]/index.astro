@@ -125,6 +125,11 @@ if (!ogImageUrl && config.features.dynamicOgImage) {
 const ogImage = ogImageUrl
   ? new URL(ogImageUrl, Astro.url.origin).href
   : undefined;
+
+const hasShareLinks = config.shareLinks.length > 0;
+const hasAdjacentPosts = Boolean(
+  prevPost || nextPost || seriesPrevPost || seriesNextPost
+);
 ---
 
 <PostLayout
@@ -142,7 +147,7 @@ const ogImage = ogImageUrl
   <main
     id="main-content"
     class:list={[
-      "mx-auto w-full max-w-[90rem] px-4 xl:grid xl:grid-cols-[16rem_minmax(0,50rem)_16rem] xl:gap-12",
+      "mx-auto w-full max-w-[104rem] px-4 xl:grid xl:grid-cols-[16rem_minmax(0,50rem)_16rem] xl:gap-40",
       { "mt-8": !config.features.showBackButton },
     ]}
     data-pagefind-body
@@ -196,17 +201,22 @@ const ogImage = ogImageUrl
         {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
       </ul>
 
-      <ShareLinks />
+      {hasShareLinks && <ShareLinks />}
 
-      <hr class="my-8 border-dashed" />
-
-      <AdjacentPostNav
-        {prevPost}
-        {nextPost}
-        {seriesPrevPost}
-        {seriesNextPost}
-        series={series ? slugifyStr(series) : undefined}
-      />
+      {
+        hasAdjacentPosts && (
+          <>
+            <hr class="my-8 border-dashed" />
+            <AdjacentPostNav
+              {prevPost}
+              {nextPost}
+              {seriesPrevPost}
+              {seriesNextPost}
+              series={series ? slugifyStr(series) : undefined}
+            />
+          </>
+        )
+      }
     </div>
 
     <div
