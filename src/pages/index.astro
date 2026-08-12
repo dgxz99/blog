@@ -33,41 +33,42 @@ const homePath = getRelativeLocaleUrl(locale, "");
     data-home-path={homePath}
     class="app-layout my-1"
   >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Mingalaba
+    <section id="hero" class="border-border border-b pt-10 pb-8 sm:pt-14">
+      <h1 class="text-3xl font-bold tracking-wide sm:text-4xl">
+        你好，我是Daguo
       </h1>
-      <a
-        target="_blank"
-        href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
 
-      <p>
-        AstroPaper is a minimal, responsive, accessible and SEO-friendly Astro
-        blog theme. This theme follows best practices and provides accessibility
-        out of the box. Light and dark mode are supported by default. Moreover,
-        additional color schemes can also be configured.
+      <p class="mt-6 text-lg leading-relaxed">
+        这里记录软件开发、Linux使用与工具实践，也会留下一些学习过程和日常思考。
       </p>
-      <p class="mt-2">
-        Read the blog posts or check{" "}
+      <p class="text-muted-foreground mt-2 leading-relaxed">
+        我更愿意写下真正遇到的问题、做过的尝试和最终可复现的解决方式。希望这些记录既方便自己回看，也能为偶然来到这里的人提供一点参考。
+      </p>
+      <div class="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
         <LinkButton
           class="hover:text-accent underline decoration-dashed underline-offset-4"
-          href="https://github.com/satnaing/astro-paper#readme"
+          href={getRelativeLocaleUrl(locale, "posts")}
         >
-          README
-        </LinkButton>{" "}
-        for more info.
-      </p>
+          浏览文章
+          <IconArrowRight class="inline-block rtl:-rotate-180" />
+        </LinkButton>
+        <LinkButton
+          class="hover:text-accent underline decoration-dashed underline-offset-4"
+          href={getRelativeLocaleUrl(locale, "series")}
+        >
+          查看专栏
+          <IconArrowRight class="inline-block rtl:-rotate-180" />
+        </LinkButton>
+        <LinkButton
+          target="_blank"
+          href={`${import.meta.env.BASE_URL.replace(/\/?$/, "/")}rss.xml`}
+          class="hover:text-accent underline decoration-dashed underline-offset-4"
+          aria-label="订阅 RSS"
+        >
+          <IconRss class="stroke-accent inline-block size-5 stroke-2" />
+          订阅 RSS
+        </LinkButton>
+      </div>
       {
         socials.length > 0 && (
           <div class="mt-4 flex max-sm:flex-col sm:items-center">
