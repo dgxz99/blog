@@ -1,35 +1,28 @@
 ---
-title: "About"
-description: "A bit about me and this blog."
+title: "关于"
+description: "关于Daguo和这个博客。"
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+你好，我是Daguo，一名喜欢折腾软件、Linux和各类实用工具的开发者。
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+建立这个博客，是想给日常遇到的问题和做过的实践留一个长期、可检索的地方。相比只记录最终命令，我更希望把问题背景、尝试过程和容易踩坑的地方一起写下来，让文章在一段时间之后依然有参考价值。
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+## 这里会写什么
 
-## Features
+- 软件开发中的实践与问题复盘
+- Linux 使用、服务部署和日常维护
+- 开发工具、命令行工具与效率配置
+- 学习过程中值得整理的知识
+- 偶尔记录一些与技术无关的日常思考
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+内容会通过[专栏](/series/)组织长期主题，也可以使用[标签](/tags/)查找具体技术。如果想从最新内容开始，可以直接浏览[全部文章](/posts/)。
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+## 关于写作
 
-and so much more.
+这里的文章首先服务于自己的理解和回顾，因此会尽量做到具体、真实、可复现。文章可能会随着实践继续修正；如果内容发生了有意义的变化，页面会标记更新时间。
 
-## Show your support
+如果文章中的步骤已经过时，或者存在更合适的做法，欢迎通过页面上的编辑入口发起Pull Request，也可以通过站点提供的联系方式与我交流。
 
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
+## 关于本站
 
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+本站基于[Astro](https://astro.build/)和[AstroPaper](https://github.com/satnaing/astro-paper)构建，在原主题基础上完成了中文界面、本地字体、文章目录、专栏和页面布局等调整。博客内容与项目代码托管在[GitHub](https://github.com/dgxz99/blog)。
