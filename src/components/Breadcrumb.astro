@@ -24,6 +24,11 @@ const decodeSegment = (value: string) => {
   }
 };
 
+const formatPage = (page: string | number) =>
+  t.pagination.page.replace("{{page}}", String(page));
+const formatPageContext = (page: string | number) =>
+  locale.startsWith("zh") ? `（${formatPage(page)}）` : `(${formatPage(page)})`;
+
 const navLabels: Record<string, string> = {
   posts: t.nav.posts,
   series: t.nav.series,
@@ -39,7 +44,7 @@ if (breadcrumbList[0] === "posts") {
   breadcrumbList.splice(
     0,
     2,
-    `${t.nav.posts} (${t.pagination.page.toLowerCase()} ${breadcrumbList[1] || 1})`
+    `${t.nav.posts}${formatPageContext(breadcrumbList[1] || 1)}`
   );
 }
 
@@ -52,7 +57,7 @@ if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
     `${decodeSegment(breadcrumbList[1])} ${
       Number(breadcrumbList[2]) === 1
         ? ""
-        : `(${t.pagination.page.toLowerCase()} ${breadcrumbList[2]})`
+        : formatPageContext(breadcrumbList[2])
     }`
   );
 }
@@ -65,7 +70,7 @@ if (breadcrumbList[0] === "series" && !isNaN(Number(breadcrumbList[2]))) {
     `${decodeSegment(breadcrumbList[1])} ${
       Number(breadcrumbList[2]) === 1
         ? ""
-        : `(${t.pagination.page.toLowerCase()} ${breadcrumbList[2]})`
+        : formatPageContext(breadcrumbList[2])
     }`
   );
 }

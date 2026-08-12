@@ -27,7 +27,7 @@ export default {
   pagination: {
     prev: "Prev",
     next: "Next",
-    page: "Page",
+    page: "page {{page}}",
   },
   home: {
     socialLinks: "Social Links",
