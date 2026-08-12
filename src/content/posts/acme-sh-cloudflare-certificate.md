@@ -1,6 +1,7 @@
 ---
 title: 使用 acme.sh 与 Cloudflare DNS 签发、部署并自动续期 HTTPS 证书
 pubDatetime: 2026-08-11T17:06:32+08:00
+series: Linux 运维
 featured: true
 draft: false
 tags:

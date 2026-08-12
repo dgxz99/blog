@@ -4,6 +4,7 @@ export default {
   nav: {
     home: "首页",
     posts: "文章",
+    series: "专栏",
     tags: "标签",
     about: "关于",
     archives: "归档",
@@ -34,6 +35,10 @@ export default {
     recentPosts: "最近文章",
     allPosts: "全部文章",
   },
+  series: {
+    post: "篇",
+    posts: "篇",
+  },
   footer: {
     copyright: "版权所有",
     allRightsReserved: "保留所有权利。",
@@ -47,6 +52,10 @@ export default {
 
     postsTitle: "文章",
     postsDesc: "浏览已发布的全部文章。",
+
+    seriesTitle: "专栏",
+    seriesDesc: "按长期主题浏览文章。",
+    seriesDetailDesc: "收录于专栏：",
 
     archivesTitle: "归档",
     archivesDesc: "按时间浏览全部文章。",

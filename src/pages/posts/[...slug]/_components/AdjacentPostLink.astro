@@ -1,0 +1,49 @@
+---
+import IconArrowLeft from "@/assets/icons/IconArrowLeft.svg";
+import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
+import { getPostUrl } from "@/utils/getPostPaths";
+import { useTranslations } from "@/i18n";
+import config from "@/config";
+
+type Props = {
+  post: {
+    id: string;
+    title: string;
+    filePath: string | undefined;
+  };
+  direction: "prev" | "next";
+  series?: string;
+};
+
+const { post, direction, series } = Astro.props;
+const locale = Astro.currentLocale ?? config.site.lang;
+const t = useTranslations(locale);
+const isPrevious = direction === "prev";
+const postUrl = getPostUrl(post.id, post.filePath, locale);
+const href = series
+  ? `${postUrl}?series=${encodeURIComponent(series)}`
+  : postUrl;
+---
+
+<a
+  {href}
+  class:list={[
+    "flex w-full gap-1 hover:opacity-75",
+    { "justify-end text-end sm:col-start-2": !isPrevious },
+  ]}
+>
+  {
+    isPrevious && (
+      <IconArrowLeft class="inline-block flex-none rtl:rotate-180" />
+    )
+  }
+  <div>
+    <span>{isPrevious ? t.post.previousPost : t.post.nextPost}</span>
+    <div class="text-accent/85 text-sm">{post.title}</div>
+  </div>
+  {
+    !isPrevious && (
+      <IconArrowRight class="inline-block flex-none rtl:rotate-180" />
+    )
+  }
+</a>

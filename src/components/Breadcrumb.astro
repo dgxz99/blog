@@ -26,6 +26,7 @@ const decodeSegment = (value: string) => {
 
 const navLabels: Record<string, string> = {
   posts: t.nav.posts,
+  series: t.nav.series,
   tags: t.nav.tags,
   about: t.nav.about,
   archives: t.nav.archives,
@@ -45,6 +46,19 @@ if (breadcrumbList[0] === "posts") {
 // if breadcrumb is Home > Tags > [tag] > [page] <etc>
 // replace [tag] > [page] with localized [tag] (page number)
 if (breadcrumbList[0] === "tags" && !isNaN(Number(breadcrumbList[2]))) {
+  breadcrumbList.splice(
+    1,
+    3,
+    `${decodeSegment(breadcrumbList[1])} ${
+      Number(breadcrumbList[2]) === 1
+        ? ""
+        : `(${t.pagination.page.toLowerCase()} ${breadcrumbList[2]})`
+    }`
+  );
+}
+
+// 专栏分页路径与标签页保持相同的展示方式
+if (breadcrumbList[0] === "series" && !isNaN(Number(breadcrumbList[2]))) {
   breadcrumbList.splice(
     1,
     3,

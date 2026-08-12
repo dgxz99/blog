@@ -4,6 +4,7 @@ export default {
   nav: {
     home: "Home",
     posts: "Posts",
+    series: "Series",
     tags: "Tags",
     about: "About",
     archives: "Archives",
@@ -34,6 +35,10 @@ export default {
     recentPosts: "Recent Posts",
     allPosts: "All Posts",
   },
+  series: {
+    post: "post",
+    posts: "posts",
+  },
   footer: {
     copyright: "Copyright",
     allRightsReserved: "All rights reserved.",
@@ -47,6 +52,10 @@ export default {
 
     postsTitle: "Posts",
     postsDesc: "All the articles I've posted.",
+
+    seriesTitle: "Series",
+    seriesDesc: "Browse posts by long-term topic.",
+    seriesDetailDesc: "Posts in series: ",
 
     archivesTitle: "Archives",
     archivesDesc: "All the articles I've archived.",
