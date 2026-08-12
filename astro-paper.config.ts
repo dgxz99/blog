@@ -7,7 +7,7 @@ export default defineAstroPaperConfig({
     description: "记录软件开发、技术实践与日常思考的个人博客。",
     author: "Daguo",
     profile: "https://github.com/dgxz99",
-    ogImage: "daguo-blog-og.png",
+    ogImage: "og.png",
     lang: "zh-CN",
     timezone: "Asia/Shanghai",
     dir: "ltr",

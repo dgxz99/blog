@@ -55,6 +55,15 @@ export const GET: APIRoute = async ({ props, url }) => {
     ),
   ]);
 
+  const publishedAt = new Intl.DateTimeFormat("zh-CN", {
+    timeZone: props.data.timezone ?? config.site.timezone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+    .format(props.data.pubDatetime)
+    .replaceAll("/", ".");
+
   const svg = await satori(
     {
       type: "div",
@@ -92,12 +101,15 @@ export const GET: APIRoute = async ({ props, url }) => {
             type: "div",
             props: {
               style: {
+                position: "absolute",
+                left: "6%",
+                top: "10%",
                 border: "4px solid #000",
                 background: "#fefbfb",
                 borderRadius: "4px",
                 display: "flex",
                 justifyContent: "center",
-                margin: "2rem",
+                overflow: "hidden",
                 width: "88%",
                 height: "80%",
               },
@@ -108,21 +120,24 @@ export const GET: APIRoute = async ({ props, url }) => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-between",
-                    margin: "20px",
-                    width: "90%",
-                    height: "90%",
+                    boxSizing: "border-box",
+                    padding: "34px 48px 30px",
+                    width: "100%",
+                    height: "100%",
                   },
                   children: [
                     {
-                      type: "p",
+                      type: "div",
                       props: {
                         style: {
-                          fontSize: 72,
-                          fontWeight: "bold",
-                          maxHeight: "84%",
-                          overflow: "hidden",
+                          display: "flex",
+                          alignItems: "center",
+                          color: "#e65100",
+                          fontSize: 24,
+                          fontWeight: 700,
+                          letterSpacing: "0.08em",
                         },
-                        children: props.data.title,
+                        children: props.data.series ?? "文章",
                       },
                     },
                     {
@@ -130,42 +145,68 @@ export const GET: APIRoute = async ({ props, url }) => {
                       props: {
                         style: {
                           display: "flex",
+                          flexDirection: "column",
+                          justifyContent: "center",
+                          flex: 1,
+                          overflow: "hidden",
+                        },
+                        children: [
+                          {
+                            type: "div",
+                            props: {
+                              style: {
+                                fontFamily: "LXGW WenKai",
+                                fontSize: 50,
+                                fontWeight: 400,
+                                lineHeight: 1.22,
+                                maxHeight: 192,
+                                overflow: "hidden",
+                              },
+                              children: props.data.title,
+                            },
+                          },
+                          {
+                            type: "div",
+                            props: {
+                              style: {
+                                color: "#4b4b4b",
+                                fontFamily: "LXGW WenKai",
+                                fontSize: 24,
+                                lineHeight: 1.5,
+                                marginTop: 16,
+                                maxHeight: 72,
+                                overflow: "hidden",
+                              },
+                              children: props.data.description,
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    {
+                      type: "div",
+                      props: {
+                        style: {
+                          borderTop: "3px solid #e65100",
+                          display: "flex",
                           justifyContent: "space-between",
+                          paddingTop: 14,
                           width: "100%",
-                          marginBottom: "8px",
-                          fontSize: 28,
+                          fontSize: 23,
                         },
                         children: [
                           {
                             type: "span",
                             props: {
-                              children: [
-                                "by ",
-                                {
-                                  type: "span",
-                                  props: {
-                                    style: { color: "transparent" },
-                                    children: '"',
-                                  },
-                                },
-                                {
-                                  type: "span",
-                                  props: {
-                                    style: {
-                                      overflow: "hidden",
-                                      fontWeight: "bold",
-                                    },
-                                    children: props.data.author,
-                                  },
-                                },
-                              ],
+                              style: { color: "#4b4b4b" },
+                              children: publishedAt,
                             },
                           },
                           {
                             type: "span",
                             props: {
-                              style: { overflow: "hidden", fontWeight: "bold" },
-                              children: config.site.title,
+                              style: { fontWeight: 700 },
+                              children: new URL(config.site.url).hostname,
                             },
                           },
                         ],
