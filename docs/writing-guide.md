@@ -52,7 +52,7 @@ modDatetime: 2026-08-13T09:00:00+08:00
 title: 使用Astro搭建个人博客
 featured: false
 draft: false
-series: Astro实践
+series: Astro
 tags:
   - Astro
   - 博客

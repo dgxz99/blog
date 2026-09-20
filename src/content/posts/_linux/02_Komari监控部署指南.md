@@ -2,7 +2,7 @@
 id: 01N9ZGW0RNP8
 title: Komari监控部署指南
 pubDatetime: 2026-09-08T16:10:33+08:00
-series: Linux实践
+series: Linux
 draft: false
 tags:
   - Komari

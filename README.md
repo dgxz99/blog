@@ -79,7 +79,7 @@ pubDatetime: 2026-08-12T14:30:00+08:00
 modDatetime: 2026-08-13T09:00:00+08:00
 featured: false
 draft: false
-series: Astro实践
+series: Astro
 tags:
   - Astro
   - 博客

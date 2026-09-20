@@ -2,7 +2,7 @@
 id: 01N7R4P88YH9
 title: 使用acme.sh与Cloudflare DNS签发、部署并自动续期HTTPS证书
 pubDatetime: 2026-08-11T17:06:32+08:00
-series: Linux实践
+series: Linux
 featured: true
 draft: false
 tags:

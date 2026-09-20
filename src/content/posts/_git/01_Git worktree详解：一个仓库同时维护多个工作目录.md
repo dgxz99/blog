@@ -2,7 +2,7 @@
 id: 01N9525H6YHN
 title: Git worktree详解：一个仓库同时维护多个工作目录
 pubDatetime: 2026-08-29T15:20:44+08:00
-series: Git实践
+series: Git
 draft: false
 tags:
   - Git

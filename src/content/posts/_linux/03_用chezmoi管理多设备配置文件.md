@@ -2,7 +2,7 @@
 id: 01NAWEY9PQD6
 title: 用chezmoi管理多设备配置文件
 pubDatetime: 2026-09-19T15:36:24+08:00
-series: Linux实践
+series: Linux
 draft: false
 tags:
   - chezmoi
