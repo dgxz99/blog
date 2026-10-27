@@ -224,6 +224,74 @@ acme.sh --list
 
 证书会保存在`~/.acme.sh/`下，但这个目录是acme.sh的内部工作目录。[acme.sh官方说明](https://github.com/acmesh-official/acme.sh)明确建议不要让Nginx或Apache直接引用其中的文件，因为内部目录结构将来可能变化。
 
+#### 5.1.5 后续签发新的证书
+
+在同一台服务器上，后续可能需要为其他域名签发证书。如果此前已经使用 acme.sh 通过 Cloudflare DNS 验证成功签发过证书，并且保存的 API Token 仍然有效，就可以复用原有凭据，无需重新创建 `CF_Token`。
+
+**步骤一：查询已有证书**
+
+```bash
+acme.sh --list
+```
+
+查看此前签发的证书，确定一个使用 `dns_cf` 验证的已有证书。
+
+**步骤二：查找 Cloudflare 凭据保存位置**
+
+```bash
+grep -RlE '^(CF_Token|CF_Zone_ID|CF_Account_ID)=' ~/.acme.sh --include='*.conf'
+```
+
+通常可能保存在：
+
+- `~/.acme.sh/account.conf`：全局账号配置。
+- `~/.acme.sh/<主域名>_ecc/<主域名>.conf`：ECC 证书对应的域名配置。
+
+上述命令仅输出文件路径，不显示 Token 内容。
+
+**步骤三：加载已有 Cloudflare 凭据**
+
+如果凭据保存在某张已有证书的域名配置文件中，可执行：
+
+```bash
+# 替换成步骤二找到的配置文件路径，有一个'.'，也可以用source
+. ~/.acme.sh/<已有主域名>_ecc/<已有主域名>.conf
+
+# 导出 Cloudflare API 凭据
+export CF_Token CF_Zone_ID CF_Account_ID
+
+# 检查 Token 是否存在
+echo $CF_Token $CF_Zone_ID $CF_Account_ID
+
+# 签发证书（替换为实际需要的域名），可以不加--force
+acme.sh --issue \
+  --dns dns_cf \
+  -d old.example.com \
+  -d new.example.com \
+  --server letsencrypt \
+  --force
+```
+
+**步骤四：进行验证**
+
+```bash
+acme.sh --list
+```
+
+说明：`.`：读取已有配置文件中的变量，也可以用source。
+
+如果是给**现有证书增加域名**，必须同时列出原有域名及新增域名，并保持原来的第一个 `-d` 不变，避免遗漏原有 SAN 域名。
+
+如果是**签发新的独立证书**，只需填写新证书所需的域名即可。
+
+**注意事项：**
+
+- 复用凭据的前提是 Token 仍然有效，且具有目标域名所在 Cloudflare Zone 的 DNS 编辑权限。
+- 如果 `CF_Token` 保存在 `account.conf` 中，acme.sh 通常可以直接读取，无需手动加载已有证书配置。
+- 如果使用新的独立证书，建议确认凭据也已正确保存，以免后续自动续期失败。
+- `--force` 仅在确实需要强制重新签发时使用，不建议作为常规参数。
+- 不要随意删除已有证书配置文件，否则可能破坏自动续期记录。
+
 ### 5.2 直接在服务器上完成HTTP验证
 
 如果不使用Cloudflare DNS API，也可以直接在域名指向的服务器上申请证书。CA会通过域名访问这台服务器，以确认申请者确实能够控制该域名。这种方式不需要Cloudflare Token，但必须保证域名已经解析到当前服务器，并且公网可以访问80端口。
