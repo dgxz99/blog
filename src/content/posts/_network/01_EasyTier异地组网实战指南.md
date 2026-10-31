@@ -4,6 +4,7 @@ title: "EasyTier异地组网实战指南"
 description: "从NAT穿透原理到GUI、CLI与Docker混合部署，记录EasyTier异地组网、自建共享节点、访问控制与连通性排查的完整流程"
 pubDatetime: 2026-10-31T22:38:59+08:00
 draft: false
+series: Network
 tags:
   - EasyTier
   - Linux
