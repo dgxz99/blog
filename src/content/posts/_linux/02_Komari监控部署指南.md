@@ -344,7 +344,8 @@ service_user="${SUDO_USER:-$(id -un)}"
 这一行决定了服务将以什么身份运行，直接衍生出两种主要形态：
 
 1. **通过 `sudo bash install.sh` 安装（推荐做法）**：脚本获得提升权限后，会把程序安装到 `/opt/komari/agent`，并生成系统级服务 `/etc/systemd/system/komari-agent.service`。由于脚本抓取到了 `SUDO_USER`，服务配置中的执行用户会被自动设为 `User=<普通用户名>`。这样既获得了系统引导开机自启的能力，又将实际运行权限限制在普通用户内，遵循最小权限原则。
-2. **普通用户直接运行（EUID != 0）**：若直接以非root身份运行安装脚本，Agent会安装在 `~/.local/share/komari`，并配置Systemd用户服务（`~/.config/systemd/user/komari-agent.service`）。由于许多Linux系统在SSH会话断开后会休眠用户会话，需要由管理员执行 `sudo loginctl enable-linger <用户名>` 才能保持持续运行。
+2. **root用户安装**：若是后续想要设置延迟监测，推荐直接切换到root用户进行部署，防止后续还需要进行额外的权限补充。
+3. **普通用户直接运行（EUID != 0）**：若直接以非root身份运行安装脚本，Agent会安装在 `~/.local/share/komari`，并配置Systemd用户服务（`~/.config/systemd/user/komari-agent.service`）。由于许多Linux系统在SSH会话断开后会休眠用户会话，需要由管理员执行 `sudo loginctl enable-linger <用户名>` 才能保持持续运行。
 
 故而这里一般省事的话直接推荐使用root权限。
 
